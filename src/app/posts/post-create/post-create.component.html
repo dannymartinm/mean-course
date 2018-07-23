@@ -1,11 +1,13 @@
-<!-- /property binding [value] -->
-<!-- /two-way binding [(ngModel)]-->
 <mat-card>
-  <mat-form-field>
-    <input matInput type="text" [(ngModel)]="enteredTitle">
-  </mat-form-field>
-  <mat-form-field>
-    <textarea matInput rows="6" [(ngModel)]="enteredContent"></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="onAddPost()">Post</button>
+  <form (submit)=onAddPost(postForm) #postForm="ngForm">
+    <mat-form-field>
+      <input matInput type="text" name="title" ngModel required #title="ngModel">
+      <mat-error *ngIf="title.invalid">Title required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput rows="4" name="content" ngModel required maxlength="140" #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Content required</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Post</button>
+  </form>
 </mat-card>
