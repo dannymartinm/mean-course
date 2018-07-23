@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,6 +17,15 @@ app.use((req, res, next) => {
     'GET, POST, PATCH, DELETE, OPTIONS, PUT'
   );
   next();
+});
+
+app.post('/api/posts', (req, res, next) => {
+  const post = req.body;
+  console.log(post);
+  //201: everything is ok. New resource is created.
+  res.status(201).json({
+    message: 'Post added sucessfully'
+  });
 });
 
 app.use('/api/posts', (req, res, next) => {
